@@ -21,6 +21,10 @@ LINE = (
 
 
 def main() -> None:
+    # The gate allows 1-240 characters; refuse loudly rather than
+    # shipping an entry the judge never sees.
+    if not 1 <= len(LINE) <= 240:
+        raise ValueError(f"entry line is {len(LINE)} characters, outside 1-240")
     output_dir = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "entry.txt").write_bytes(LINE.encode("utf-8"))
